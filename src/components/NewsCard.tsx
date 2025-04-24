@@ -49,7 +49,7 @@ const ArticleContent: React.FC<{
       rel="noopener noreferrer"
       className="inline-block text-teal-600 font-medium hover:text-teal-800 transition-colors duration-200"
     >
-      اقرأ المزيد - {sourceName}
+     Read More - {sourceName}
     </a>
   </div>
 );
