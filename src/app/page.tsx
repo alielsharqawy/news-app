@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { fetchNews } from '@/utils/fetchNews';
-import Header from '@/components/Header';
-import NewsCard from '@/components/NewsCard';
+import { useEffect, useState } from "react";
+import { fetchNews } from "@/utils/fetchNews";
+import Header from "@/components/Header";
+import NewsCard from "@/components/NewsCard";
 
-// Define the article interface for type safety
 interface Article {
   title: string;
   description: string | null;
@@ -13,12 +12,11 @@ interface Article {
   source: { name: string };
 }
 
-// News Grid Component
 const NewsGrid: React.FC<{ articles: Article[] }> = ({ articles }) => {
   if (articles.length === 0) {
     return (
       <p className="text-center col-span-full text-gray-500 text-lg">
-        لا توجد أخبار حالياً.
+        No news available at the moment.
       </p>
     );
   }
@@ -34,8 +32,8 @@ const NewsGrid: React.FC<{ articles: Article[] }> = ({ articles }) => {
 
 export default function Home() {
   const [news, setNews] = useState<Article[]>([]);
-  const [category, setCategory] = useState('');
-  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState("");
+  const [search, setSearch] = useState(""); // not used currently
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,33 +42,30 @@ export default function Home() {
       try {
         setIsLoading(true);
         setError(null);
-        const articles = await fetchNews(category, search);
+        const articles = await fetchNews(category);
         setNews(articles || []);
-      } catch (err) {
-        setError('حدث خطأ أثناء تحميل الأخبار. حاول مرة أخرى لاحقاً.');
+      } catch {
+        setError("An error occurred while loading news. Please try again later.");
         setNews([]);
       } finally {
         setIsLoading(false);
       }
     };
     loadNews();
-  }, [category, search]);
+  }, [category]);
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header Section */}
       <Header
         category={category}
         setCategory={setCategory}
         search={search}
         setSearch={setSearch}
       />
-
-      {/* Main Content */}
       <main className="container mx-auto p-6">
         {isLoading ? (
           <div className="text-center text-gray-600 text-lg">
-           Loading News...
+            Loading news...
           </div>
         ) : error ? (
           <div className="text-center text-red-500 text-lg">{error}</div>

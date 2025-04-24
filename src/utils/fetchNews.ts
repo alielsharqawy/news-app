@@ -1,5 +1,5 @@
 // utils/fetchNews.ts
-export const fetchNews = async (category: string = '', searchTerm: string = '') => {
+export const fetchNews = async (category: string = '') => {
     const apiKey = '53d69bea5fea49f99da8566135c222e0'; 
     const query = category
   ? `category=${category}`
